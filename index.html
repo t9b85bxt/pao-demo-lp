@@ -1,0 +1,1400 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>document.documentElement.classList.add('js');</script>
+<title>片づけ・解体のパオ｜株式会社パオ（福島県郡山市）</title>
+<meta name="description" content="片づけから、解体、その先まで。福島の住まいと空き家のお困りごとを、ひとつの窓口で。福島県全域対応・見積り相談無料。">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   PAO — demo site  |  design reproduced from section refs
+   single-theme (warm light), responsive, vanilla JS
+   ============================================================ */
+
+:root{
+  color-scheme: light;
+
+  /* palette */
+  --green-900:#1f3a2c;
+  --green-800:#274b3a;
+  --green-700:#2f5a45;
+  --green-600:#3a6b53;
+  --green-200:#c9d8cb;
+  --green-100:#e5ece2;
+  --green-50:#eef2ea;
+  --orange:#e0722a;
+  --orange-dark:#c66222;
+  --orange-50:#fbeee1;
+  --paper:#f2f0e8;
+  --paper-alt:#ece9df;
+  --paper-hi:#f8f7f1;
+  --card:#ffffff;
+  --ink:#25322b;
+  --ink-soft:#4e574f;
+  --ink-mute:#828a80;
+  --line:#e2ddce;
+  --line-2:#d4cfbf;
+
+  /* type */
+  --font-display:"Zen Kaku Gothic New","Noto Sans JP",system-ui,sans-serif;
+  --font-body:"Noto Sans JP","Hiragino Kaku Gothic ProN","Yu Gothic",Meiryo,system-ui,sans-serif;
+
+  --wrap:1200px;
+  --pad:clamp(1.25rem,5vw,4rem);
+  --header-h:76px;
+  --radius:16px;
+  --radius-sm:10px;
+  --shadow-sm:0 1px 2px rgba(31,58,44,.06),0 8px 24px -14px rgba(31,58,44,.18);
+  --shadow-md:0 2px 6px rgba(31,58,44,.08),0 24px 48px -24px rgba(31,58,44,.28);
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:var(--paper);
+  line-height:1.9;
+  font-size:16px;
+  letter-spacing:.01em;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:clip;
+}
+h1,h2,h3,.h2{ line-break:strict; }
+.nav a{ word-break:keep-all; }
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
+:focus-visible{outline:2px solid var(--green-700);outline-offset:3px;border-radius:4px}
+
+/* ---------- layout primitives ---------- */
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--pad)}
+.section{padding-block:clamp(3.75rem,8.5vw,7rem)}
+.section--paper{background:var(--paper)}
+.section--alt{background:var(--paper-alt)}
+.section--hi{background:var(--paper-hi)}
+.section--green{background:var(--green-50)}
+.section-target{scroll-margin-top:calc(var(--header-h) + 8px)}
+
+.eyebrow{
+  display:inline-block;
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:.82rem;
+  letter-spacing:.14em;
+  color:#fff;
+  background:var(--orange);
+  padding:.4em 1em;
+  border-radius:999px;
+  margin-bottom:1.4rem;
+}
+.h2{
+  font-family:var(--font-display);
+  font-weight:900;
+  font-size:clamp(1.5rem,3.6vw,2.5rem);
+  line-height:1.45;
+  letter-spacing:.01em;
+  color:var(--green-900);
+  text-wrap:pretty;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+}
+.lead{
+  margin-top:1rem;
+  font-size:clamp(1rem,1.5vw,1.15rem);
+  color:var(--ink-soft);
+  max-width:32em;
+  word-break:keep-all;
+  overflow-wrap:anywhere;
+}
+.voice blockquote p,.works__cta p,.promise__cap b{word-break:keep-all;overflow-wrap:anywhere}
+#worries .h2,#voice .h2{font-size:clamp(1.35rem,2.5vw,2rem)}
+.section--center .lead{margin-inline:auto}
+
+/* ---------- buttons ---------- */
+.btn{
+  display:inline-flex;align-items:center;gap:.7em;
+  font-family:var(--font-display);font-weight:700;
+  font-size:1rem;line-height:1;
+  padding:1.05em 1.6em;
+  border-radius:12px;
+  transition:transform .15s ease, background-color .15s ease, box-shadow .15s ease;
+  white-space:nowrap;
+}
+.btn .ico{width:1.15em;height:1.15em;flex:none}
+.btn--primary{background:var(--orange);color:#fff;box-shadow:var(--shadow-sm)}
+.btn--primary:hover{background:var(--orange-dark);transform:translateY(-2px)}
+.btn--dark{background:var(--green-800);color:#fff}
+.btn--dark:hover{background:var(--green-900);transform:translateY(-2px)}
+.btn--outline{border:1.5px solid currentColor;color:var(--ink)}
+.btn--outline:hover{background:rgba(0,0,0,.04);transform:translateY(-2px)}
+.btn--on-photo{border-color:rgba(255,255,255,.9);color:#fff}
+.btn--on-photo:hover{background:rgba(255,255,255,.12)}
+.btn--block{width:100%;justify-content:center}
+
+.arrow-link{
+  display:inline-flex;align-items:center;gap:.6em;
+  font-family:var(--font-display);font-weight:700;
+  border-bottom:1.5px solid currentColor;
+  padding-bottom:.25em;
+  transition:gap .15s ease,color .15s ease;
+}
+.arrow-link:hover{gap:1em;color:var(--green-700)}
+.arrow-link--orange{color:var(--orange-dark)}
+
+/* ---------- photo placeholders (仮素材) ---------- */
+.ph{
+  position:relative;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:.6rem;
+  background:
+    linear-gradient(135deg,var(--green-100),var(--green-50) 60%,#fff);
+  color:var(--green-700);
+  border-radius:var(--radius);
+  overflow:hidden;
+  isolation:isolate;
+}
+.ph::before{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background-image:repeating-linear-gradient(45deg,rgba(47,90,69,.035) 0 2px,transparent 2px 16px);
+}
+.ph__icon{width:2.4rem;height:2.4rem;opacity:.55}
+.ph__label{
+  font-family:var(--font-body);font-weight:500;
+  font-size:.8rem;letter-spacing:.03em;
+  color:var(--green-800);
+  background:rgba(255,255,255,.78);
+  padding:.3em .8em;border-radius:999px;
+  text-align:center;
+}
+.ph--16x9{aspect-ratio:16/9}
+.ph--4x3{aspect-ratio:4/3}
+.ph--3x2{aspect-ratio:3/2}
+.ph--1x1{aspect-ratio:1/1}
+.ph--3x4{aspect-ratio:3/4}
+.ph--tall{aspect-ratio:2/3}
+.ph--fill{position:absolute;inset:0;border-radius:0}
+.ph>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;z-index:1}
+.ph:has(img)::before{display:none}
+.ph--pos-right>img{object-position:72% center}
+.ph--pos-left>img{object-position:18% center}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.header{
+  position:sticky;top:0;z-index:100;
+  background:var(--paper-hi);
+  border-bottom:1px solid transparent;
+  transition:box-shadow .2s ease,border-color .2s ease;
+}
+.header.is-scrolled{box-shadow:0 6px 20px -12px rgba(31,58,44,.3);border-color:var(--line)}
+.header__inner{
+  max-width:var(--wrap);margin-inline:auto;padding:.7rem var(--pad);
+  display:flex;align-items:center;gap:1.5rem;
+  min-height:var(--header-h);
+}
+.brand{display:flex;align-items:center;gap:.7rem;flex:none}
+.brand__mark{display:block}
+.brand__text{line-height:1.25}
+.brand__text b{
+  display:block;font-family:var(--font-display);font-weight:900;
+  font-size:1.05rem;color:var(--green-900);letter-spacing:.02em;
+}
+.brand__text span{display:block;font-size:.68rem;color:var(--ink-mute);letter-spacing:.02em}
+
+.nav{margin-left:auto;display:flex;align-items:center;gap:1.6rem}
+.nav a{
+  font-family:var(--font-display);font-weight:700;font-size:.92rem;
+  color:var(--green-900);padding:.4em 0;position:relative;white-space:nowrap;
+}
+.nav a::after{
+  content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;
+  background:var(--orange);transition:right .2s ease;
+}
+.nav a:hover::after{right:0}
+.nav__cta{display:none}
+
+.header__tel{flex:none;text-align:right;line-height:1.3}
+.header__tel a{
+  display:flex;align-items:center;gap:.35rem;justify-content:flex-end;
+  font-family:var(--font-display);font-weight:900;
+  font-size:1.35rem;color:var(--green-900);letter-spacing:.01em;
+}
+.header__tel a svg{width:1.05rem;height:1.05rem}
+.header__tel small{font-size:.68rem;color:var(--ink-mute)}
+
+.nav-toggle{display:none;flex:none;width:44px;height:44px;border-radius:10px;align-items:center;justify-content:center}
+.nav-toggle span,.nav-toggle span::before,.nav-toggle span::after{
+  content:"";display:block;width:22px;height:2px;background:var(--green-900);transition:.2s ease;position:relative;
+}
+.nav-toggle span::before{position:absolute;top:-7px}
+.nav-toggle span::after{position:absolute;top:7px}
+.nav-open .nav-toggle span{background:transparent}
+.nav-open .nav-toggle span::before{top:0;transform:rotate(45deg)}
+.nav-open .nav-toggle span::after{top:0;transform:rotate(-45deg)}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;background:var(--green-900);color:#fff;overflow:hidden}
+.hero__bg{position:absolute;inset:0}
+.hero__bg .ph{height:100%;border-radius:0}
+.hero__bg .ph__icon,.closing__bg .ph__icon,
+.hero__bg .ph__label,.closing__bg .ph__label{display:none}
+.hero__bg::after{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(100deg,rgba(20,38,29,.9) 0%,rgba(20,38,29,.66) 42%,rgba(20,38,29,.28) 70%,rgba(20,38,29,.15) 100%);
+}
+.hero__inner{
+  position:relative;max-width:var(--wrap);margin-inline:auto;
+  padding:clamp(3.5rem,10vw,7rem) var(--pad) clamp(3rem,7vw,5rem);
+}
+.hero h1{
+  font-family:var(--font-display);font-weight:900;
+  font-size:clamp(2rem,5vw,3.4rem);
+  line-height:1.42;letter-spacing:.02em;
+  text-wrap:balance;
+}
+.hero__sub{
+  margin-top:1.4rem;font-size:clamp(1rem,1.8vw,1.28rem);
+  color:rgba(255,255,255,.9);font-weight:500;max-width:34ch;
+}
+.hero__cta{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2.4rem}
+.hero__meta{
+  display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1.4rem;
+  margin-top:2.2rem;font-size:.9rem;color:rgba(255,255,255,.82);
+}
+.hero__meta span{display:flex;align-items:center;gap:.45rem}
+.hero__meta svg{width:1rem;height:1rem;opacity:.85}
+.hero__meta .sep{width:1px;height:1rem;background:rgba(255,255,255,.3)}
+
+/* ============================================================
+   1 — 悩み / worries
+   ============================================================ */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4.5rem);align-items:center}
+.worries__list{list-style:none;margin:2.2rem 0;display:flex;flex-direction:column;gap:1.5rem;position:relative}
+.worries__list li{display:flex;align-items:center;gap:1.1rem;font-family:var(--font-display);font-weight:700;font-size:clamp(1.05rem,2vw,1.3rem);color:var(--ink)}
+.worries__ico{
+  flex:none;width:56px;height:56px;border-radius:50%;
+  background:var(--green-100);color:var(--green-700);
+  display:flex;align-items:center;justify-content:center;
+}
+.worries__ico svg{width:26px;height:26px}
+.worries__close{
+  border-top:1px solid var(--line-2);padding-top:1.6rem;margin-top:.4rem;
+  font-family:var(--font-display);font-weight:900;font-size:clamp(1.1rem,2.2vw,1.4rem);
+  color:var(--green-900);
+}
+.worries__media{position:relative}
+.worries__media .ph--main{border-radius:var(--radius)}
+.worries__inset{
+  position:absolute;right:-8px;bottom:-28px;width:52%;
+  border:5px solid var(--paper);border-radius:14px;box-shadow:var(--shadow-md);
+}
+
+/* ============================================================
+   2 — one-stop flow
+   ============================================================ */
+.onestop{text-align:center}
+.onestop .h2{font-size:clamp(1.7rem,4.4vw,3rem)}
+.pill{
+  display:inline-block;margin:1.8rem 0 .5rem;
+  font-family:var(--font-display);font-weight:700;font-size:.95rem;letter-spacing:.08em;
+  color:#fff;background:var(--orange);padding:.5em 1.4em;border-radius:999px;
+  position:relative;
+}
+.pill::before,.pill::after{
+  content:"";position:absolute;top:50%;width:clamp(20px,8vw,90px);height:1.5px;background:var(--green-200);
+}
+.pill::before{right:calc(100% + 14px)}
+.pill::after{left:calc(100% + 14px)}
+
+.flow{
+  margin-top:2.6rem;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(1.6rem,2.6vw,2.6rem);
+  counter-reset:step;
+}
+.flow__item{position:relative;text-align:left}
+.flow__item::after{
+  content:"";position:absolute;top:26%;right:-1.6rem;
+  width:1.3rem;height:1.3rem;
+  background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232f5a45' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
+  z-index:4;
+}
+.flow__item:last-child::after{display:none}
+.flow__ph{border-radius:14px;position:relative}
+.flow__num{
+  position:absolute;top:.6rem;left:.6rem;z-index:3;
+  width:34px;height:34px;border-radius:50%;
+  background:var(--green-800);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:700;font-size:.9rem;
+}
+.flow__label{
+  display:block;margin-top:.7rem;
+  font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--green-900);
+}
+.onestop__foot{
+  margin-top:2.6rem;background:var(--green-100);border-radius:var(--radius);
+  padding:clamp(1.4rem,3vw,2rem);
+  display:grid;grid-template-columns:1fr auto;gap:1.2rem 1.8rem;align-items:center;text-align:left;
+}
+.onestop__foot-txt{display:flex;flex-direction:column;gap:.55rem;min-width:0}
+.onestop__foot h3{
+  font-family:var(--font-display);font-weight:900;font-size:clamp(1.05rem,2vw,1.3rem);color:var(--green-900);
+  display:flex;align-items:center;gap:.7rem;
+}
+.onestop__foot h3 svg{width:1.6rem;height:1.6rem;flex:none;color:var(--green-700)}
+.onestop__foot p{font-size:.9rem;color:var(--ink-soft)}
+.br-md{display:inline}
+@media (max-width:640px){.br-md{display:none}}
+
+/* ============================================================
+   3 — services bento
+   ============================================================ */
+.svc{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:1.2rem;margin-top:2.4rem}
+.svc__card{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:1.6rem;display:flex;flex-direction:column;gap:1rem;
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+.svc__card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md)}
+.svc__card--wide{grid-row:span 2}
+.svc__head{display:flex;gap:1rem;align-items:flex-start}
+.svc__ico{
+  flex:none;width:52px;height:52px;border-radius:12px;
+  background:var(--green-50);color:var(--green-700);
+  display:flex;align-items:center;justify-content:center;
+}
+.svc__ico svg{width:26px;height:26px}
+.svc__card h3{font-family:var(--font-display);font-weight:900;font-size:1.2rem;color:var(--green-900)}
+.svc__card p{font-size:.88rem;color:var(--ink-soft);margin-top:.2rem}
+.svc__card .arrow-link{font-size:.9rem;align-self:flex-start;border:none;padding:0}
+.svc__card .arrow-link svg{width:1.5rem}
+.svc__media{margin-top:auto}
+.svc__media .ph{border-radius:12px}
+.svc__foot{
+  margin-top:1.6rem;display:flex;flex-wrap:wrap;align-items:center;gap:1rem;justify-content:space-between;
+}
+.svc__foot p{display:flex;align-items:center;gap:.6rem;font-size:.9rem;color:var(--ink-soft)}
+.svc__foot svg{width:1.3rem;height:1.3rem;color:var(--green-700);flex:none}
+
+/* ============================================================
+   4 — trust / credentials
+   ============================================================ */
+.trust__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+.trust__year{
+  display:flex;align-items:baseline;gap:.5rem;margin:1.8rem 0 1.4rem;
+  font-family:var(--font-display);color:var(--green-900);
+}
+.trust__year b{font-weight:500;font-size:clamp(3.5rem,9vw,5.5rem);line-height:.9;letter-spacing:.02em}
+.trust__year span{font-weight:700;font-size:1rem}
+.trust__list{list-style:none;display:flex;flex-direction:column}
+.trust__list li{
+  display:flex;gap:1rem;align-items:center;
+  padding:.95rem 0;border-top:1px solid var(--line-2);font-size:.92rem;
+}
+.trust__list li:first-child{border-top:none}
+.trust__list .ti{
+  flex:none;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--green-200);
+  display:flex;align-items:center;justify-content:center;color:var(--green-700);
+}
+.trust__list .ti svg{width:20px;height:20px}
+.trust__list b{font-weight:700;color:var(--ink)}
+.trust__list small{display:block;color:var(--ink-mute);font-size:.82rem;font-weight:400}
+.trust__media{
+  display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:.9rem;
+  clip-path:polygon(6% 0,100% 0,100% 100%,0 100%);
+}
+.trust__media .ph:first-child{grid-column:span 2}
+
+/* ============================================================
+   5 — pricing
+   ============================================================ */
+.price__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(2rem,4vw,3.5rem);align-items:start}
+.price__card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(1.3rem,3vw,2rem);box-shadow:var(--shadow-sm)}
+.price__card h3{
+  display:flex;align-items:center;gap:.7rem;
+  font-family:var(--font-display);font-weight:900;font-size:1.15rem;color:var(--green-900);
+  margin-bottom:1.2rem;
+}
+.price__card h3 svg{width:1.7rem;height:1.7rem;color:var(--green-700);flex:none}
+.price__card h3 small{font-weight:400;font-size:.8rem;color:var(--ink-mute)}
+.price__row{
+  display:grid;grid-template-columns:auto 1fr auto;gap:.4rem 1rem;align-items:center;
+  padding:1rem 0;border-top:1px dashed var(--line-2);
+}
+.price__row:first-of-type{border-top:none}
+.price__row .plan{font-family:var(--font-display);font-weight:900;font-size:1.1rem;color:var(--ink)}
+.price__row .qty{font-size:.82rem;color:var(--ink-mute)}
+.price__row .amt{font-family:var(--font-display);font-weight:900;font-size:1.35rem;color:var(--green-900);white-space:nowrap}
+.price__row .amt em{font-style:normal;font-size:.7em;font-weight:700}
+.price__note{
+  display:flex;gap:.6rem;margin-top:1.2rem;font-size:.8rem;color:var(--ink-mute);line-height:1.7;
+}
+.price__note svg{width:1.1rem;height:1.1rem;flex:none;margin-top:.2rem}
+.price__flow{
+  margin-top:1.2rem;display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;
+  background:var(--green-50);border-radius:12px;padding:1rem 1.2rem;
+  font-family:var(--font-display);font-weight:700;font-size:.9rem;color:var(--green-900);
+}
+.price__flow svg{width:1.2rem;height:1.2rem;color:var(--green-700)}
+.price__aside{align-self:stretch;display:flex;flex-direction:column;gap:1.4rem}
+.price__aside .ph{flex:1;min-height:220px}
+.price__aside .btn{width:100%;justify-content:center}
+.price__aside .arrow-link{align-self:center;font-size:.9rem}
+
+/* ============================================================
+   6 — works / case studies
+   ============================================================ */
+.works__main{
+  background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow-sm);
+  display:grid;grid-template-columns:1.55fr 1fr;margin-top:2.2rem;
+}
+.ba{position:relative;isolation:isolate}
+.ba__pane{aspect-ratio:16/10}
+.ba__after{position:absolute;inset:0;clip-path:inset(0 0 0 var(--pos,50%))}
+.ba__tag{
+  position:absolute;top:1rem;left:1rem;z-index:4;
+  display:flex;align-items:center;gap:.4rem;
+  background:var(--green-900);color:#fff;font-size:.8rem;font-weight:700;
+  font-family:var(--font-display);padding:.4em .9em;border-radius:999px;
+}
+.ba__tag svg{width:1rem;height:1rem}
+.ba__lab{position:absolute;bottom:1rem;z-index:4;font-family:var(--font-display);font-weight:700;font-size:.78rem;color:#fff;background:rgba(20,38,29,.72);padding:.3em .8em;border-radius:6px}
+.ba__lab--b{left:1rem}
+.ba__lab--a{right:1rem;background:var(--orange)}
+.ba__range{
+  position:absolute;inset:0;z-index:6;width:100%;height:100%;
+  -webkit-appearance:none;appearance:none;background:transparent;margin:0;cursor:ew-resize;
+}
+.ba__range::-webkit-slider-thumb{-webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:#fff;border:3px solid var(--green-800);box-shadow:0 2px 8px rgba(0,0,0,.35);cursor:ew-resize}
+.ba__range::-moz-range-thumb{width:34px;height:34px;border-radius:50%;background:#fff;border:3px solid var(--green-800);box-shadow:0 2px 8px rgba(0,0,0,.35);cursor:ew-resize}
+.ba__line{position:absolute;top:0;bottom:0;left:var(--pos,50%);width:2px;background:#fff;z-index:5;transform:translateX(-1px);pointer-events:none}
+
+.works__spec{padding:clamp(1.3rem,3vw,2rem);display:flex;flex-direction:column;justify-content:center;gap:0}
+.works__spec .row{display:flex;gap:1rem;align-items:flex-start;padding:1.1rem 0;border-top:1px solid var(--line)}
+.works__spec .row:first-child{border-top:none}
+.works__spec .ri{flex:none;width:40px;height:40px;border-radius:50%;background:var(--green-50);color:var(--green-700);display:flex;align-items:center;justify-content:center}
+.works__spec .ri svg{width:20px;height:20px}
+.works__spec .rk{display:block;font-size:.78rem;color:var(--ink-mute)}
+.works__spec .rv{display:block;font-family:var(--font-display);font-weight:700;font-size:1.05rem;color:var(--green-900)}
+.works__spec .rv em{font-style:normal;font-size:1.5em;font-weight:900}
+
+.works__sub{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.1rem;margin-top:1.1rem}
+.mini{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.mini .ph{border-radius:0}
+.mini__body{padding:.9rem 1rem;font-family:var(--font-display);font-weight:700;font-size:.92rem;color:var(--green-900)}
+.mini__flag{font-family:var(--font-body);font-weight:400;font-size:.7rem;color:var(--ink-mute);display:block;margin-bottom:.2rem}
+.works__cta{
+  background:var(--green-50);border:1px solid var(--green-100);border-radius:14px;
+  padding:1.2rem 1.4rem;display:flex;flex-direction:column;gap:1rem;justify-content:center;
+}
+.works__cta p{font-size:.86rem;color:var(--ink-soft)}
+
+/* ============================================================
+   7 — 5 promises
+   ============================================================ */
+.promise__flow{
+  margin-top:2.6rem;display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;
+}
+.promise__item{display:flex;flex-direction:column;gap:.8rem}
+.promise__item:nth-child(even){margin-top:2.4rem}
+.promise__cap{display:flex;gap:.7rem;align-items:flex-start}
+.promise__num{
+  flex:none;width:34px;height:34px;border-radius:50%;background:var(--green-800);color:#fff;
+  display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:.85rem;
+}
+.promise__cap b{font-family:var(--font-display);font-weight:700;font-size:.95rem;color:var(--green-900);line-height:1.5}
+.promise__item .ph{border-radius:14px}
+
+/* ============================================================
+   8 — voices
+   ============================================================ */
+.voice__grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:center}
+.voice__media{position:relative;border-radius:var(--radius);overflow:hidden}
+.voice__media .ph{aspect-ratio:4/3}
+.voice blockquote{position:relative;padding-left:2.4rem;margin:0}
+.voice blockquote::before{
+  content:"\201C";position:absolute;left:0;top:-.4rem;
+  font-family:Georgia,serif;font-size:3.4rem;color:var(--green-200);line-height:1;
+}
+.voice blockquote p{font-family:var(--font-display);font-weight:700;font-size:clamp(1.05rem,1.9vw,1.25rem);color:var(--ink);line-height:1.7}
+.voice blockquote cite{display:block;margin-top:.7rem;font-style:normal;font-size:.85rem;color:var(--ink-mute)}
+.voice__div{border:none;border-top:1px solid var(--line-2);margin:1.8rem 0}
+.voice__note{font-size:.88rem;color:var(--ink-soft);margin:1.4rem 0}
+
+/* ============================================================
+   9 — remote support
+   ============================================================ */
+.remote{background:var(--green-900);color:#fff;overflow:hidden}
+.remote__grid{display:grid;grid-template-columns:1fr 1fr;align-items:stretch}
+.remote__body{padding:clamp(2.5rem,6vw,5rem) var(--pad);max-width:640px;margin-left:auto}
+.remote .h2{color:#fff}
+.remote__sub{margin-top:1rem;color:rgba(255,255,255,.85);font-size:1rem;max-width:36ch}
+.area{margin:1.9rem 0;max-width:440px}
+.area__label{font-family:var(--font-display);font-weight:700;font-size:.84rem;letter-spacing:.05em;color:rgba(255,255,255,.9);margin-bottom:1.15rem}
+.area__line{position:relative;display:flex;justify-content:space-between;gap:.5rem}
+.area__line::before{content:"";position:absolute;left:8%;right:8%;top:6px;height:2px;background:linear-gradient(90deg,rgba(255,255,255,.12),rgba(255,255,255,.32),rgba(255,255,255,.12))}
+.area__node{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:.45rem;text-align:center;font-family:var(--font-display);font-weight:700;font-size:.92rem;color:rgba(255,255,255,.88)}
+.area__node i{width:14px;height:14px;border-radius:50%;background:var(--green-900);border:2px solid rgba(255,255,255,.45);z-index:1}
+.area__node small{font-family:var(--font-body);font-weight:400;font-size:.72rem;line-height:1.5;color:rgba(255,255,255,.6)}
+.area__node--hub{color:#fff}
+.area__node--hub i{background:var(--orange);border-color:var(--orange);box-shadow:0 0 0 5px rgba(224,114,42,.22)}
+.area__node--hub b{font-size:.7rem;font-weight:700;color:#f2b184;background:rgba(224,114,42,.16);border:1px solid rgba(224,114,42,.35);padding:.15em .6em;border-radius:999px;white-space:nowrap}
+.area__note{font-size:.8rem;line-height:1.8;color:rgba(255,255,255,.68);margin-top:1.15rem;max-width:none}
+@media (max-width:520px){
+  .area__line{flex-direction:column;gap:0}
+  .area__line::before{left:6px;right:auto;top:8px;bottom:8px;width:2px;height:auto;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.3),rgba(255,255,255,.12))}
+  .area__node{flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:flex-start;gap:.5rem;text-align:left;padding:.6rem 0}
+  .area__node small{flex-basis:100%;margin-left:1.4rem}
+}
+.remote__steps{display:flex;align-items:flex-start;gap:.4rem;flex-wrap:wrap;margin-bottom:2rem}
+.rstep{flex:1;min-width:96px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.rstep__n{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.14);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:.82rem}
+.rstep svg{width:1.5rem;height:1.5rem;color:rgba(255,255,255,.8)}
+.rstep b{font-family:var(--font-body);font-weight:500;font-size:.82rem;color:rgba(255,255,255,.9);line-height:1.5}
+.rstep__arrow{align-self:center;color:rgba(255,255,255,.4);padding-top:1rem}
+.remote__media{position:relative;min-height:320px}
+.remote__media .ph{position:absolute;inset:0;border-radius:0}
+.remote__bar{
+  position:absolute;left:0;right:0;bottom:0;z-index:3;
+  background:rgba(20,38,29,.55);backdrop-filter:blur(4px);
+  padding:1rem var(--pad);display:flex;align-items:center;gap:1rem;
+  font-family:var(--font-display);font-weight:900;font-size:1.3rem;
+}
+.remote__bar small{font-family:var(--font-body);font-weight:400;font-size:.8rem;color:rgba(255,255,255,.75)}
+
+/* ============================================================
+   10 — FAQ
+   ============================================================ */
+.faq__grid{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(2rem,5vw,4rem);align-items:start}
+.faq__list{display:flex;flex-direction:column;gap:.9rem}
+.faq__item{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:border-color .2s ease}
+.faq__item.is-open{border-color:var(--orange);background:var(--orange-50)}
+.faq__q{
+  width:100%;display:flex;align-items:center;gap:1rem;text-align:left;
+  padding:1.1rem 1.3rem;font-family:var(--font-display);font-weight:700;font-size:1rem;color:var(--green-900);
+}
+.faq__mk{
+  flex:none;width:26px;height:26px;border-radius:50%;background:var(--green-100);color:var(--green-800);
+  display:flex;align-items:center;justify-content:center;font-weight:700;transition:.2s ease;
+}
+.faq__item.is-open .faq__mk{background:var(--orange);color:#fff}
+.faq__chev{margin-left:auto;flex:none;width:1rem;height:1rem;transition:transform .2s ease;color:var(--ink-mute)}
+.faq__item.is-open .faq__chev{transform:rotate(180deg);color:var(--orange-dark)}
+.faq__a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .25s ease}
+.faq__item.is-open .faq__a{grid-template-rows:1fr}
+.faq__a>div{overflow:hidden}
+.faq__a p{padding:0 1.3rem 1.2rem;font-size:.9rem;color:var(--ink-soft);line-height:1.9}
+.faq__side .h2{font-size:clamp(1.5rem,3.4vw,2.1rem)}
+.faq__side hr{border:none;border-top:1px solid var(--line-2);margin:1.4rem 0}
+.faq__contact{display:flex;gap:.9rem;align-items:flex-start;font-size:.9rem;color:var(--ink-soft)}
+.faq__contact .ci{flex:none;width:44px;height:44px;border-radius:50%;background:var(--green-100);color:var(--green-700);display:flex;align-items:center;justify-content:center}
+.faq__contact .ci svg{width:22px;height:22px}
+.faq__side .arrow-link{margin-top:1.4rem;font-size:.9rem}
+
+/* ============================================================
+   11 — closing CTA + footer
+   ============================================================ */
+.closing{position:relative;color:#fff;text-align:center;overflow:hidden;background:var(--green-900)}
+.closing__bg{position:absolute;inset:0}
+.closing__bg .ph{height:100%;border-radius:0}
+.closing__bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,38,29,.55),rgba(20,38,29,.78))}
+.closing__inner{position:relative;max-width:900px;margin-inline:auto;padding:clamp(3.5rem,9vw,6.5rem) var(--pad)}
+.closing h2{font-family:var(--font-display);font-weight:900;font-size:clamp(1.5rem,4.2vw,2.7rem);line-height:1.5;letter-spacing:.02em;text-wrap:balance}
+.closing__sub{margin-top:1.2rem;color:rgba(255,255,255,.88);font-size:clamp(1rem,1.6vw,1.15rem)}
+.closing__cta{display:flex;flex-wrap:wrap;gap:1rem;justify-content:center;margin-top:2.2rem}
+.closing__trust{display:flex;flex-wrap:wrap;gap:.6rem 1.3rem;justify-content:center;margin-top:2rem;font-size:.9rem;color:rgba(255,255,255,.85)}
+.closing__trust span{display:flex;align-items:center;gap:.45rem}
+.closing__trust svg{width:1rem;height:1rem}
+.closing__trust .sep{width:1px;height:1rem;background:rgba(255,255,255,.3)}
+
+.footer{background:var(--paper-hi);border-top:1px solid var(--line);color:var(--ink-soft)}
+.footer__inner{
+  max-width:var(--wrap);margin-inline:auto;padding:clamp(2.5rem,5vw,3.5rem) var(--pad);
+  display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:2rem;
+}
+.footer__brand .brand__text b{font-size:1.15rem}
+.footer__flag{margin-top:.8rem;font-size:.78rem;color:var(--ink-mute)}
+.footer__nav{display:flex;flex-wrap:wrap;gap:.6rem 1.4rem;align-content:flex-start}
+.footer__nav a{font-family:var(--font-display);font-weight:700;font-size:.88rem;color:var(--green-900)}
+.footer__nav a:hover{color:var(--orange-dark)}
+.footer__contact{text-align:right}
+.footer__contact .tel{display:flex;align-items:center;gap:.4rem;justify-content:flex-end;font-family:var(--font-display);font-weight:900;font-size:1.5rem;color:var(--green-900)}
+.footer__contact .tel svg{width:1.1rem;height:1.1rem}
+.footer__contact small{font-size:.72rem;color:var(--ink-mute)}
+.footer__lic{
+  margin-top:1rem;padding-top:1rem;border-top:1px solid var(--line);
+  font-size:.72rem;line-height:1.8;color:var(--ink-mute);text-align:right;
+}
+.footer__lic b{display:block;color:var(--ink-soft);font-weight:700;margin-bottom:.2rem;font-size:.72rem}
+.footer__bar{border-top:1px solid var(--line);text-align:center;padding:1.1rem var(--pad);font-size:.72rem;color:var(--ink-mute)}
+
+/* ============================================================
+   mobile sticky action bar
+   ============================================================ */
+.mbar{
+  position:fixed;left:0;right:0;bottom:0;z-index:90;display:none;
+  gap:1px;
+  background:var(--line-2);border-top:1px solid var(--line-2);
+  box-shadow:0 -6px 20px -12px rgba(31,58,44,.4);
+}
+.mbar a{
+  flex:1 1 0;min-width:0;
+  background:var(--paper-hi);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2rem;
+  padding:.55rem .2rem;font-family:var(--font-display);font-weight:700;font-size:.7rem;color:var(--green-900);
+  white-space:nowrap;
+}
+.mbar a svg{width:1.15rem;height:1.15rem}
+.mbar a.is-accent{background:var(--orange);color:#fff;flex-grow:1.35}
+
+/* ============================================================
+   reveal animation
+   ============================================================ */
+.js [data-reveal]{
+  opacity:0;transform:translateY(32px);
+  transition:opacity .75s cubic-bezier(.16,1,.3,1),transform .75s cubic-bezier(.16,1,.3,1);
+}
+.js [data-reveal].is-in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .js [data-reveal],.js [data-reveal].is-in{opacity:1;transform:none;transition:none}
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width:1080px){
+  .nav{gap:1.1rem}
+  .nav a{font-size:.85rem}
+  .header__tel a{font-size:1.15rem}
+}
+@media (max-width:900px){
+  :root{--header-h:64px}
+  .nav-toggle{display:flex}
+  .nav{
+    position:fixed;inset:var(--header-h) 0 auto 0;
+    flex-direction:column;align-items:stretch;gap:0;
+    background:var(--paper-hi);border-bottom:1px solid var(--line);
+    padding:.5rem var(--pad) 1.5rem;
+    transform:translateY(-120%);transition:transform .28s ease;
+    box-shadow:var(--shadow-md);max-height:calc(100vh - var(--header-h));overflow:auto;
+  }
+  .nav-open .nav{transform:none}
+  .nav a{padding:1rem .2rem;border-bottom:1px solid var(--line);font-size:1rem}
+  .nav a::after{display:none}
+  .nav__cta{display:flex;flex-direction:column;gap:.8rem;margin-top:1.2rem}
+  .nav__cta .btn{width:100%;justify-content:center}
+  .nav a{white-space:normal}
+  .header__tel{margin-left:auto}
+  .header__tel small{display:none}
+  .header__tel a{font-size:1.05rem}
+  .header__inner{gap:.75rem}
+
+  .split,.trust__grid,.price__grid,.voice__grid,.faq__grid,.remote__grid{grid-template-columns:1fr}
+  .works__main{grid-template-columns:1fr}
+  .trust__media{clip-path:none}
+  .worries__media{margin-bottom:2.5rem}
+  .remote__body{margin:0;max-width:none}
+  .remote__media{min-height:260px}
+  .price__aside{flex-direction:column}
+
+  .flow{grid-template-columns:1fr 1fr;gap:1.4rem}
+  .flow__item::after{display:none}
+  .flow__ph{aspect-ratio:4/3}
+  .promise__flow{grid-template-columns:1fr 1fr;gap:1.4rem 1.2rem}
+  .promise__item:nth-child(even){margin-top:0}
+  .promise__item .ph{aspect-ratio:4/3}
+  .voice__media .ph{aspect-ratio:16/11}
+  .works__sub{grid-template-columns:1fr}
+  .onestop__foot{grid-template-columns:1fr;text-align:left}
+
+  .mbar{display:flex}
+  body{padding-bottom:60px}
+  .footer__inner{grid-template-columns:1fr;gap:1.6rem}
+  .footer__contact,.footer__lic{text-align:left}
+  .footer__contact .tel{justify-content:flex-start}
+}
+@media (max-width:560px){
+  .header__tel{display:none}
+  .brand__text b{font-size:.95rem}
+}
+@media (max-width:520px){
+  .flow,.promise__flow,.svc{grid-template-columns:1fr}
+  .flow__ph,.promise__item .ph{aspect-ratio:16/10}
+  .hero__cta .btn,.closing__cta .btn{width:100%;justify-content:center}
+  .price__row{grid-template-columns:1fr auto}
+  .price__row .qty{grid-column:1/-1}
+  .pill::before,.pill::after{display:none}
+  .worries__inset{position:static;width:100%;margin-top:1rem;border-width:4px}
+  .remote__steps{flex-direction:column;align-items:stretch}
+  .rstep{flex-direction:row;text-align:left;justify-content:flex-start}
+  .rstep__arrow{transform:rotate(90deg);align-self:flex-start;padding:0 0 0 .8rem}
+  .voice blockquote{padding-left:1.35rem}
+  .voice blockquote p{font-size:.95rem;line-height:1.75}
+  .voice blockquote::before{font-size:2.4rem}
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== HEADER ==================== -->
+<header class="header" id="top">
+  <div class="header__inner">
+    <a class="brand" href="#top" aria-label="株式会社パオ 片づけ・解体のパオ">
+      <svg class="brand__mark" width="44" height="44" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+        <rect width="44" height="44" rx="10" fill="#1f3a2c"/>
+        <path d="M12 32V13h7.2c3.6 0 5.8 2 5.8 5.2S22.8 23.6 19.2 23.6H16V32h-4Zm4-11.7h2.8c1.6 0 2.5-.8 2.5-2.1s-.9-2.1-2.5-2.1H16v4.2Z" fill="#fff"/>
+        <circle cx="30.5" cy="27" r="4.4" stroke="#e0722a" stroke-width="2.4"/>
+      </svg>
+      <span class="brand__text">
+        <b>片づけ・解体のパオ</b>
+        <span>株式会社パオ</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav">
+      <a href="#service">片づけ・不用品</a>
+      <a href="#service">遺品整理</a>
+      <a href="#service">解体工事</a>
+      <a href="#service">法人のお客様</a>
+      <a href="#works">事例</a>
+      <a href="#trust">会社案内</a>
+      <div class="nav__cta">
+        <a class="btn btn--primary" href="#contact">無料で相談・見積り</a>
+        <a class="btn btn--outline" href="#contact">LINEで写真を送る</a>
+      </div>
+    </nav>
+
+    <div class="header__tel">
+      <a href="tel:0120-886-068">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+        0120-886-068
+      </a>
+      <small>福島県全域対応｜受付 8:00–18:00</small>
+    </div>
+
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開閉" aria-expanded="false" aria-controls="nav"><span></span></button>
+  </div>
+</header>
+
+<main>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="hero__bg">
+    <div class="ph ph--pos-right">
+      <img src="ph-hero-main.jpg" alt="" fetchpriority="high">
+    </div>
+  </div>
+  <div class="hero__inner">
+    <h1>片づけから、解体、<br>その先まで。</h1>
+    <p class="hero__sub">福島の住まいと空き家のお困りごとを、<br>ひとつの窓口で。</p>
+    <div class="hero__cta">
+      <a class="btn btn--primary" href="#contact">
+        無料で相談・見積り
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn--outline btn--on-photo" href="#contact">
+        <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 5.7 2 10.2c0 2.6 1.5 4.9 3.9 6.4-.2.7-.8 2.5-.9 2.9 0 0-.1.5.3.4.4-.1 2.7-1.8 3.7-2.5.6.1 1.3.2 2 .2 5.5 0 10-3.7 10-8.2C21 5.7 17.5 2 12 2Z"/></svg>
+        LINEで写真を送る
+      </a>
+    </div>
+    <div class="hero__meta">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>福島県全域対応</span>
+      <span class="sep"></span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>受付 8:00–18:00</span>
+      <span class="sep"></span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.1 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9Z"/></svg>0120-886-068</span>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 1. WORRIES ==================== -->
+<section class="section section--paper section-target" id="worries">
+  <div class="wrap" data-reveal>
+    <div class="split">
+      <div>
+        <h2 class="h2">実家のこと、<br>どこから手をつければいい？</h2>
+        <ul class="worries__list">
+          <li>
+            <span class="worries__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="7" rx="1"/><rect x="3" y="13" width="18" height="7" rx="1"/><path d="M10 7.5h4M10 16.5h4"/></svg></span>
+            家財が多くて進まない
+          </li>
+          <li>
+            <span class="worries__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 3v3h6V3"/><path d="M12 11v4M10 13h4"/></svg></span>
+            片づけと解体を<br>別々に頼むのが不安
+          </li>
+          <li>
+            <span class="worries__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+            遠方からでも任せられる？
+          </li>
+        </ul>
+        <p class="worries__close">その悩み、順番ごとパオにご相談ください。</p>
+        <p style="margin-top:1.2rem"><a class="arrow-link" href="#service">相談できる内容を見る
+          <svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+      </div>
+      <div class="worries__media">
+        <div class="ph ph--3x2 ph--main">
+          <img src="ph-worry-family.jpg" alt="実家の居間で家財を仕分ける親子" loading="lazy" decoding="async">
+        </div>
+        <div class="ph ph--4x3 worries__inset">
+          <img src="ph-worry-keys.jpg" alt="古い写真の束と実家の鍵" loading="lazy" decoding="async">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 2. ONE-STOP FLOW ==================== -->
+<section class="section section--alt section--center onestop section-target" id="onestop">
+  <div class="wrap" data-reveal>
+    <h2 class="h2">片づけから更地まで、一本の道で。</h2>
+    <p class="lead">業者を探し直す手間も、<wbr>話を伝え直す不安も減らします。</p>
+    <div><span class="pill">窓口はひとつ</span></div>
+
+    <div class="flow">
+      <div class="flow__item">
+        <div class="ph ph--4x3 flow__ph"><span class="flow__num">01</span>
+          <img src="ph-flow-01-sort.jpg" alt="室内で家財を仕分ける作業員" loading="lazy" decoding="async">
+        </div>
+        <span class="flow__label">仕分け・買取</span>
+      </div>
+      <div class="flow__item">
+        <div class="ph ph--4x3 flow__ph"><span class="flow__num">02</span>
+          <img src="ph-flow-02-carryout.jpg" alt="家具をトラックへ搬出・積み込み" loading="lazy" decoding="async">
+        </div>
+        <span class="flow__label">搬出・片づけ</span>
+      </div>
+      <div class="flow__item">
+        <div class="ph ph--4x3 flow__ph"><span class="flow__num">03</span>
+          <img src="ph-flow-03-demolition.jpg" alt="重機による木造家屋の解体" loading="lazy" decoding="async">
+        </div>
+        <span class="flow__label">建物の解体</span>
+      </div>
+      <div class="flow__item">
+        <div class="ph ph--4x3 flow__ph"><span class="flow__num">04</span>
+          <img src="ph-flow-04-transport.jpg" alt="中間処理施設と収集運搬車" loading="lazy" decoding="async">
+        </div>
+        <span class="flow__label">収集運搬・適正処理</span>
+      </div>
+    </div>
+
+    <div class="onestop__foot">
+      <div class="onestop__foot-txt">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>自社＋グループ連携で、最後の処理まで見える安心。</h3>
+        <p>分別から運搬、解体、処理までの流れを自社＋グループで管理。<br class="br-md">見えにくい工程まで、責任をもって対応します。</p>
+      </div>
+      <a class="btn btn--primary" href="#contact">ワンストップ対応を相談する
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 3. SERVICES ==================== -->
+<section class="section section--paper section-target" id="service">
+  <div class="wrap" data-reveal>
+    <h2 class="h2">お困りごとに合わせて、必要なところから。</h2>
+
+    <div class="svc">
+      <article class="svc__card">
+        <div class="svc__head">
+          <span class="svc__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 8l9-5 9 5-9 5-9-5z"/><path d="M3 8v8l9 5 9-5V8"/></svg></span>
+          <div><h3>片づけ・不用品回収</h3><p>引越し、空き家、倉庫、ゴミ屋敷</p></div>
+        </div>
+        <div class="svc__media"><div class="ph ph--16x9"><img src="ph-service-cleanup.jpg" alt="室内の不用品を回収する作業員" loading="lazy" decoding="async"></div></div>
+        <a class="arrow-link" href="#contact">相談する<svg viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+
+      <article class="svc__card svc__card--wide">
+        <div class="svc__head">
+          <span class="svc__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M20.8 11.5A7 7 0 0 0 12 5a7 7 0 0 0-6.9 6.5A5 5 0 0 0 6 21h12a5 5 0 0 0 2.8-9.5Z"/><path d="M12 12v5M9.5 14.5 12 12l2.5 2.5"/></svg></span>
+          <div><h3>遺品整理・生前整理</h3><p>供養、形見の配送、貴重品の仕分け</p></div>
+        </div>
+        <a class="arrow-link" href="#contact">相談する<svg viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <div class="svc__media"><div class="ph ph--3x2"><img src="ph-service-ihin.jpg" alt="アルバムを見ながらご夫婦に寄り添うスタッフ" loading="lazy" decoding="async"></div></div>
+        <div class="svc__media"><div class="ph ph--16x9"><img src="ph-service-container.jpg" alt="回収コンテナと作業車" loading="lazy" decoding="async"></div></div>
+      </article>
+
+      <article class="svc__card">
+        <div class="svc__head">
+          <span class="svc__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M3 21h18M6 21V11l6-2v12M14 21V7l4 2v12"/><path d="M4 11l4-4 3 1"/></svg></span>
+          <div><h3>解体工事・法人対応</h3><p>住宅・工場・設備撤去、産廃・マニフェスト</p></div>
+        </div>
+        <div class="svc__media"><div class="ph ph--16x9"><img src="ph-service-demolition.jpg" alt="工場・倉庫の解体現場と重機" loading="lazy" decoding="async"></div></div>
+        <a class="arrow-link" href="#contact">相談する<svg viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </article>
+    </div>
+
+    <div class="svc__foot">
+      <p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>迷った場合は、状況を伺って最適な進め方をご案内します。</p>
+      <a class="btn btn--primary" href="#contact">サービスを選んで相談
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 4. TRUST ==================== -->
+<section class="section section--alt section-target" id="trust">
+  <div class="wrap" data-reveal>
+    <div class="trust__grid">
+      <div>
+        <h2 class="h2">見えない処理の先まで、<br>責任を持つために。</h2>
+        <p class="lead">許認可、自社車両、処理体制。<br>安心の根拠を、きちんと公開します。</p>
+        <div class="trust__year"><b>1980</b><span>年設立</span></div>
+        <ul class="trust__list">
+          <li><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><b>福島県全域対応</b></li>
+          <li><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="7" width="13" height="10" rx="1"/><path d="M15 9h4l3 3v5h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="18" cy="18" r="2"/></svg></span><b>産業廃棄物収集運搬業<small>福島県 第00702063184号</small></b></li>
+          <li><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg></span><b>一般廃棄物収集運搬業<small>郡山市 第75号</small></b></li>
+          <li><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 20h16M6 16l6-12 6 12M9 11h6"/></svg></span><b>古物商<small>福島県公安委員会 第251080004009号</small></b></li>
+          <li><span class="ti"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 21V9l7-4v4l7-4v16M3 21h18M8 13h0M8 17h0M14 13h0M14 17h0"/></svg></span><b>グループ会社に中間処理場</b></li>
+        </ul>
+        <p style="margin-top:1.6rem"><a class="arrow-link arrow-link--orange" href="#contact">会社と設備について詳しく
+          <svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+      </div>
+      <div class="trust__media">
+        <div class="ph ph--16x9"><img src="ph-trust-trucks.jpg" alt="PAOの自社車両（クレーン車・アームロール車）" loading="lazy" decoding="async"></div>
+        <div class="ph ph--4x3"><img src="ph-trust-facility.jpg" alt="グループ会社の中間処理施設" loading="lazy" decoding="async"></div>
+        <div class="ph ph--4x3"><img src="ph-trust-check.jpg" alt="チェックリストを確認する作業員" loading="lazy" decoding="async"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 5. PRICING ==================== -->
+<section class="section section--paper section-target" id="price">
+  <div class="wrap" data-reveal>
+    <h2 class="h2">まずは、費用の目安を見える形に。</h2>
+    <div class="price__grid" style="margin-top:2.2rem">
+      <div class="price__card">
+        <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><path d="M14 2v6h6M12 11v6M9.5 13.5h5"/></svg>片づけ定額パック <small>（税抜・目安）</small></h3>
+        <div class="price__row"><span class="plan">シングル</span><span class="qty">かご台車1台・スタッフ1名</span><span class="amt">15,000<em>円〜</em></span></div>
+        <div class="price__row"><span class="plan">トリプル</span><span class="qty">かご台車3台・スタッフ2名</span><span class="amt">38,000<em>円〜</em></span></div>
+        <div class="price__row"><span class="plan">ジャンボ</span><span class="qty">かご台車6台・スタッフ2名</span><span class="amt">55,000<em>円〜</em></span></div>
+        <div class="price__row"><span class="plan">メガトン</span><span class="qty">かご台車10台・スタッフ2名</span><span class="amt">98,000<em>円〜</em></span></div>
+        <p class="price__note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h0M12 11v5"/></svg>品目・搬出条件・家電リサイクル料等により変動します。現地確認後に正式見積りをご案内します。</p>
+        <div class="price__flow">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M8 7l1.5-2h5L16 7"/></svg>
+          写真で概算
+          <svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          現地確認・正式見積り
+        </div>
+      </div>
+      <div class="price__aside">
+        <div class="ph ph--4x3"><img src="ph-price-truck.jpg" alt="かご台車を積んだPAOのトラック" loading="lazy" decoding="async"></div>
+        <a class="btn btn--primary btn--block" href="#contact">
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          無料で見積りを相談</a>
+        <a class="arrow-link" href="#price">料金の考え方を見る
+          <svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 6. WORKS ==================== -->
+<section class="section section--alt section-target" id="works">
+  <div class="wrap" data-reveal>
+    <h2 class="h2">費用も工期も、事例で具体的に。</h2>
+    <p class="lead">実際の解体・片づけのビフォーアフターと、<br>費用・工期・対応エリアをご紹介します。</p>
+
+    <div class="works__main">
+      <div class="ba" id="ba">
+        <div class="ba__pane ph ph--fill" style="position:relative;border-radius:0">
+          <img src="ph-works-before.jpg" alt="解体前の木造2階建て住宅" loading="lazy" decoding="async">
+        </div>
+        <div class="ba__after">
+          <div class="ba__pane ph ph--fill" style="border-radius:0">
+            <img src="ph-works-after.jpg" alt="解体後・整地された更地" loading="lazy" decoding="async">
+          </div>
+        </div>
+        <span class="ba__tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>実績事例（検証済み）</span>
+        <span class="ba__lab ba__lab--b">BEFORE</span>
+        <span class="ba__lab ba__lab--a">AFTER</span>
+        <span class="ba__line" id="baLine"></span>
+        <input class="ba__range" id="baRange" type="range" min="0" max="100" value="50" aria-label="ビフォーアフターの比較スライダー">
+      </div>
+      <div class="works__spec">
+        <div class="row"><span class="ri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 10l9-7 9 7v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 21v-6h6v6"/></svg></span><span><span class="rk">工事内容</span><span class="rv">木造2階建て住宅＋庭の解体撤去</span></span></div>
+        <div class="row"><span class="ri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M9.5 9.5h4a1.5 1.5 0 0 1 0 3h-3a1.5 1.5 0 0 0 0 3h4"/></svg></span><span><span class="rk">費用</span><span class="rv">約<em>240</em>万円</span></span></div>
+        <div class="row"><span class="ri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></span><span><span class="rk">工期</span><span class="rv">約<em>3</em>週間</span></span></div>
+        <div class="row"><span class="ri"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span><span class="rk">対応エリア</span><span class="rv">遠方からのご依頼</span></span></div>
+      </div>
+    </div>
+
+    <div class="works__sub">
+      <article class="mini">
+        <div class="ph ph--16x9"><img src="ph-works-akiya.jpg" alt="家財が残る空き家の室内" loading="lazy" decoding="async"></div>
+        <div class="mini__body"><span class="mini__flag">掲載イメージ／詳細は要確認</span>空き家の家財一式片づけ</div>
+      </article>
+      <article class="mini">
+        <div class="ph ph--16x9"><img src="ph-works-office.jpg" alt="什器を撤去した後のオフィス" loading="lazy" decoding="async"></div>
+        <div class="mini__body"><span class="mini__flag">掲載イメージ／詳細は要確認</span>事務所・設備の撤去</div>
+      </article>
+      <div class="works__cta">
+        <p>今後、写真・費用・工期・エリアをそろえて<br>継続掲載する設計。</p>
+        <a class="btn btn--primary" href="#contact">施工事例をもっと見る
+          <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 7. PROMISES ==================== -->
+<section class="section section--paper section-target" id="promise">
+  <div class="wrap" data-reveal>
+    <div>
+      <span class="eyebrow">パオの5つのお約束</span>
+      <h2 class="h2">作業の日まで、当日も、その後も。</h2>
+      <p class="lead">見積りの早さだけでなく、<br>近隣への配慮と作業後まで丁寧に。</p>
+    </div>
+
+    <div class="promise__flow">
+      <div class="promise__item">
+        <div class="promise__cap"><span class="promise__num">01</span><b>24時間以内に<br>見積り連絡</b></div>
+        <div class="ph ph--3x4"><img src="ph-promise-01-estimate.jpg" alt="玄関先で見積り内容を説明するスタッフ" loading="lazy" decoding="async"></div>
+      </div>
+      <div class="promise__item">
+        <div class="promise__cap"><span class="promise__num">02</span><b>環境・アスベスト<br>への配慮</b></div>
+        <div class="ph ph--3x4"><img src="ph-promise-02-asbestos.jpg" alt="建物の養生・防じん対策" loading="lazy" decoding="async"></div>
+      </div>
+      <div class="promise__item">
+        <div class="promise__cap"><span class="promise__num">03</span><b>工事前後の<br>近隣あいさつ</b></div>
+        <div class="ph ph--3x4"><img src="ph-promise-03-greeting.jpg" alt="近隣宅の玄関先であいさつするスタッフ" loading="lazy" decoding="async"></div>
+      </div>
+      <div class="promise__item">
+        <div class="promise__cap"><span class="promise__num">04</span><b>安全と接客の<br>スタッフ教育</b></div>
+        <div class="ph ph--3x4"><img src="ph-promise-04-safety.jpg" alt="現場での朝礼・安全確認" loading="lazy" decoding="async"></div>
+      </div>
+      <div class="promise__item">
+        <div class="promise__cap"><span class="promise__num">05</span><b>作業後<br>アンケート</b></div>
+        <div class="ph ph--3x4"><img src="ph-promise-05-survey.jpg" alt="作業後アンケート用紙とペン" loading="lazy" decoding="async"></div>
+      </div>
+    </div>
+
+    <p style="margin-top:2rem"><a class="arrow-link" href="#onestop">ご依頼の流れを見る
+      <svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+  </div>
+</section>
+
+<!-- ==================== 8. VOICES ==================== -->
+<section class="section section--alt section-target" id="voice">
+  <div class="wrap" data-reveal>
+    <div class="voice voice__grid">
+      <div class="voice__media">
+        <div class="ph"><img src="ph-voice-staff.jpg" alt="作業服・ヘルメット姿のPAOスタッフ2名" loading="lazy" decoding="async"></div>
+      </div>
+      <div>
+        <h2 class="h2">最後は、<br>人で選んでいただける仕事を。</h2>
+        <blockquote>
+          <p>「あの人に聞いてみよう」と思ってもらえる<br>相談相手を目指します。</p>
+          <cite>統括部長　渡部 嘉幸</cite>
+        </blockquote>
+        <hr class="voice__div">
+        <blockquote>
+          <p>何をするにも安全が最優先。<br>任せて良かったと思われる仕事を。</p>
+          <cite>クリーニングマネジャー　荒川 一樹</cite>
+        </blockquote>
+        <p class="voice__note">身なり・言葉遣い・あいさつまで。お宅に上がる仕事だから、接客品質も大切に。</p>
+        <p><a class="arrow-link" href="#trust">パオについて知る
+          <svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 9. REMOTE ==================== -->
+<section class="remote section-target" id="remote">
+  <div class="remote__grid" data-reveal>
+    <div class="remote__body">
+      <h2 class="h2">離れていても、<br>状況がわかる進め方を。</h2>
+      <p class="remote__sub">福島県全域対応。郡山のご実家・空き家も、遠方からご相談ください。</p>
+
+      <div class="area">
+        <p class="area__label">対応エリア ── 福島県全域</p>
+        <div class="area__line">
+          <span class="area__node">
+            <i></i>会津
+            <small>会津若松・喜多方 ほか</small>
+          </span>
+          <span class="area__node area__node--hub">
+            <i></i>中通り
+            <b>郡山＝拠点</b>
+            <small>福島・白河・須賀川 ほか</small>
+          </span>
+          <span class="area__node">
+            <i></i>浜通り
+            <small>いわき・相馬 ほか</small>
+          </span>
+        </div>
+        <p class="area__note">郡山を拠点に、県内全域へ出張対応。遠方のご実家・空き家もまずはお電話・写真でご相談ください。</p>
+      </div>
+
+      <div class="remote__steps">
+        <div class="rstep">
+          <span class="rstep__n">01</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><circle cx="12" cy="13" r="3"/><path d="M8 7l1.5-2h5L16 7"/></svg>
+          <b>写真で<br>事前相談</b>
+        </div>
+        <span class="rstep__arrow"><svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <div class="rstep">
+          <span class="rstep__n">02</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+          <b>ご家族と<br>日程調整</b>
+        </div>
+        <span class="rstep__arrow"><svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        <div class="rstep">
+          <span class="rstep__n">03</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 7h6M9 11h6M9 15h4"/></svg>
+          <b>作業状況を<br>ご報告</b>
+        </div>
+      </div>
+
+      <a class="btn btn--outline btn--on-photo" href="#contact">対応エリアを確認する
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    </div>
+
+    <div class="remote__media">
+      <div class="ph"><img src="ph-remote-online.jpg" alt="ビデオ通話で現場を確認するオンライン相談" loading="lazy" decoding="async"></div>
+      <div class="remote__bar">
+        <svg viewBox="0 0 24 24" width="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.1 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9Z"/></svg>
+        0120-886-068 <small>受付 8:00–18:00</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== 10. FAQ ==================== -->
+<section class="section section--green section-target" id="faq">
+  <div class="wrap" data-reveal>
+    <div class="faq__grid">
+      <div class="faq__list">
+        <div class="faq__item is-open">
+          <button class="faq__q" aria-expanded="true"><span class="faq__mk">−</span>見積りだけでもお願いできますか？<svg class="faq__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq__a"><div><p>はい。状況を伺い、必要に応じて現地確認のうえ無料でお見積りします。正式な内容と費用をご確認いただいてからご判断ください。</p></div></div>
+        </div>
+        <div class="faq__item">
+          <button class="faq__q" aria-expanded="false"><span class="faq__mk">＋</span>まだ片づけるか解体するか決まっていません。<svg class="faq__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq__a"><div><p>決まっていなくて大丈夫です。ご状況を伺い、片づけ・解体それぞれの目安をお伝えしたうえで、必要な順番から一緒に整理します。</p></div></div>
+        </div>
+        <div class="faq__item">
+          <button class="faq__q" aria-expanded="false"><span class="faq__mk">＋</span>遠方に住んでいても依頼できますか？<svg class="faq__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq__a"><div><p>はい。写真での事前相談、ご家族との日程調整、作業状況のご報告まで対応します。福島県全域（中通り・浜通り・会津）が対象です。</p></div></div>
+        </div>
+        <div class="faq__item">
+          <button class="faq__q" aria-expanded="false"><span class="faq__mk">＋</span>買取できる物はありますか？<svg class="faq__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq__a"><div><p>状態の良い品は査定のうえ買取が可能です。買取分は不用品の処分費用から差し引いてご案内します。</p></div></div>
+        </div>
+        <div class="faq__item">
+          <button class="faq__q" aria-expanded="false"><span class="faq__mk">＋</span>近隣へのあいさつはしてもらえますか？<svg class="faq__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
+          <div class="faq__a"><div><p>工事前・工事中を通じて、近隣へのごあいさつと清掃・安全管理に配慮します。気になる点は事前にご相談ください。</p></div></div>
+        </div>
+      </div>
+
+      <div class="faq__side">
+        <h2 class="h2">ご相談前の、<br>よくあるご質問。</h2>
+        <hr>
+        <div class="faq__contact">
+          <span class="ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+          <span>載っていない内容も、<br>気軽にお電話・LINEで。</span>
+        </div>
+        <a class="arrow-link" href="#contact">すべての質問を見る
+          <svg viewBox="0 0 24 24" width="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ==================== 11. CLOSING + FOOTER ==================== -->
+<section class="closing section-target" id="contact">
+  <div class="closing__bg">
+    <div class="ph"><img src="ph-closing-sunset.jpg" alt="" loading="lazy" decoding="async"></div>
+  </div>
+  <div class="closing__inner" data-reveal>
+    <h2>片づけたい。壊したい。<br>まだ決めきれない。どの段階でも。</h2>
+    <p class="closing__sub">状況を伺い、必要な順番から一緒に整理します。</p>
+    <div class="closing__cta">
+      <a class="btn btn--primary" href="tel:0120-886-068">
+        無料で相談・見積り
+        <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn--outline btn--on-photo" href="#contact">
+        <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 5.7 2 10.2c0 2.6 1.5 4.9 3.9 6.4-.2.7-.8 2.5-.9 2.9 0 0-.1.5.3.4.4-.1 2.7-1.8 3.7-2.5.6.1 1.3.2 2 .2 5.5 0 10-3.7 10-8.2C21 5.7 17.5 2 12 2Z"/></svg>
+        LINEで写真を送る
+      </a>
+    </div>
+    <div class="closing__trust">
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s-7-5.2-7-11a7 7 0 0 1 14 0c0 5.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>福島県全域対応</span>
+      <span class="sep"></span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>見積り相談無料</span>
+      <span class="sep"></span>
+      <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>24時間以内に見積り連絡</span>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__brand">
+      <div class="brand">
+        <svg class="brand__mark" width="40" height="40" viewBox="0 0 44 44" fill="none" aria-hidden="true">
+          <rect width="44" height="44" rx="10" fill="#1f3a2c"/>
+          <path d="M12 32V13h7.2c3.6 0 5.8 2 5.8 5.2S22.8 23.6 19.2 23.6H16V32h-4Zm4-11.7h2.8c1.6 0 2.5-.8 2.5-2.1s-.9-2.1-2.5-2.1H16v4.2Z" fill="#fff"/>
+          <circle cx="30.5" cy="27" r="4.4" stroke="#e0722a" stroke-width="2.4"/>
+        </svg>
+        <span class="brand__text"><b>株式会社パオ</b><span>片づけ・解体のパオ</span></span>
+      </div>
+      <p class="footer__flag">所在地は公開前に要確認</p>
+    </div>
+
+    <nav class="footer__nav" aria-label="フッターナビゲーション">
+      <a href="#service">片づけ・不用品</a>
+      <a href="#service">遺品整理</a>
+      <a href="#service">解体工事</a>
+      <a href="#service">法人のお客様</a>
+      <a href="#works">施工事例</a>
+      <a href="#price">料金</a>
+      <a href="#trust">会社案内</a>
+      <a href="#faq">よくある質問</a>
+      <a href="#contact">お問い合わせ</a>
+    </nav>
+
+    <div class="footer__contact">
+      <a class="tel" href="tel:0120-886-068">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.1 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9Z"/></svg>
+        0120-886-068
+      </a>
+      <small>受付 8:00–18:00</small>
+      <div class="footer__lic">
+        <b>許認可情報</b>
+        産業廃棄物収集運搬業｜福島県 第00702063184号<br>
+        一般廃棄物収集運搬業｜郡山市 第75号<br>
+        古物商｜福島県公安委員会 第251080004009号
+      </div>
+    </div>
+  </div>
+  <div class="footer__bar">© 2026 株式会社パオ｜本ページは提案用の制作イメージ（デモ）です。掲載内容は確認前の暫定です。</div>
+</footer>
+
+<!-- ==================== MOBILE ACTION BAR ==================== -->
+<nav class="mbar" aria-label="お問い合わせ">
+  <a href="tel:0120-886-068"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2 4.1 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7A2 2 0 0 1 22 16.9Z"/></svg>電話</a>
+  <a href="#contact"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.5 2 2 5.7 2 10.2c0 2.6 1.5 4.9 3.9 6.4-.2.7-.8 2.5-.9 2.9 0 0-.1.5.3.4.4-.1 2.7-1.8 3.7-2.5.6.1 1.3.2 2 .2 5.5 0 10-3.7 10-8.2C21 5.7 17.5 2 12 2Z"/></svg>LINE</a>
+  <a class="is-accent" href="#contact"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>無料見積り</a>
+</nav>
+
+<script>
+(function(){
+  "use strict";
+  var root=document.documentElement;
+
+  /* ---- header shadow on scroll ---- */
+  var header=document.querySelector(".header");
+  var onScroll=function(){ header.classList.toggle("is-scrolled", window.scrollY>8); };
+  onScroll();
+  window.addEventListener("scroll",onScroll,{passive:true});
+
+  /* ---- mobile nav ---- */
+  var toggle=document.getElementById("navToggle");
+  var nav=document.getElementById("nav");
+  var closeNav=function(){ root.classList.remove("nav-open"); toggle.setAttribute("aria-expanded","false"); };
+  toggle.addEventListener("click",function(){
+    var open=root.classList.toggle("nav-open");
+    toggle.setAttribute("aria-expanded",open?"true":"false");
+  });
+  nav.addEventListener("click",function(e){ if(e.target.closest("a")) closeNav(); });
+  window.addEventListener("keydown",function(e){ if(e.key==="Escape") closeNav(); });
+  window.addEventListener("resize",function(){ if(window.innerWidth>900) closeNav(); });
+
+  /* ---- FAQ accordion ---- */
+  document.querySelectorAll(".faq__item").forEach(function(item){
+    var btn=item.querySelector(".faq__q");
+    btn.addEventListener("click",function(){
+      var open=item.classList.toggle("is-open");
+      btn.setAttribute("aria-expanded",open?"true":"false");
+      item.querySelector(".faq__mk").textContent=open?"−":"＋";
+    });
+  });
+
+  /* ---- before / after slider ---- */
+  var ba=document.getElementById("ba");
+  if(ba){
+    var range=document.getElementById("baRange");
+    var line=document.getElementById("baLine");
+    var set=function(v){ ba.style.setProperty("--pos",v+"%"); line.style.left=v+"%"; };
+    range.addEventListener("input",function(){ set(this.value); });
+    set(50);
+  }
+
+  /* ---- reveal on scroll (per-section rise; robust: IO + scroll fallback + hard fail-safes) ---- */
+  var reduce=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var items=[].slice.call(document.querySelectorAll("[data-reveal]"));
+  // hard-show: guarantee the final state even if the CSS transition is throttled (e.g. background tab)
+  var hardShow=function(el){
+    if(el.style.opacity==="1") return;
+    el.style.transition="none"; el.style.opacity="1"; el.style.transform="none";
+  };
+  var revealAll=function(){ items.forEach(function(el){ el.classList.add("is-in"); hardShow(el); }); };
+
+  if(reduce || !("IntersectionObserver" in window)){
+    revealAll();
+  }else{
+    var reveal=function(el){
+      if(el.classList.contains("is-in")) return;
+      el.classList.add("is-in");
+      // insurance: if the transition stalls or never fires, snap to the end state
+      setTimeout(function(){ hardShow(el); }, 1200);
+    };
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){ reveal(en.target); io.unobserve(en.target); }
+      });
+    },{rootMargin:"0px 0px -8% 0px",threshold:0});
+    items.forEach(function(el){ io.observe(el); });
+
+    // fallback: reveal a section once its top has entered the viewport
+    var sweep=function(){
+      var vh=window.innerHeight||800;
+      items.forEach(function(el){
+        if(el.classList.contains("is-in")) return;
+        if(el.getBoundingClientRect().top < vh*0.92){ reveal(el); io.unobserve(el); }
+      });
+    };
+    window.addEventListener("scroll",sweep,{passive:true});
+    window.addEventListener("resize",sweep);
+    window.addEventListener("load",sweep);
+    document.addEventListener("visibilitychange",function(){ if(!document.hidden) sweep(); });
+    sweep();
+    // last-resort: after 12s, nothing should still be hidden
+    setTimeout(revealAll,12000);
+  }
+
+  /* ---- smooth anchor offset for sticky header (fallback) ---- */
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click",function(e){
+      var id=a.getAttribute("href");
+      if(id.length<2) return;
+      var t=document.querySelector(id);
+      if(!t) return;
+      e.preventDefault();
+      t.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});
+      history.replaceState(null,"",id);
+    });
+  });
+})();
+</script>
+
+</body>
+</html>

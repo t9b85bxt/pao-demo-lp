@@ -1,0 +1,11 @@
+# build output (generated from index.html, ~10MB, regenerable)
+.artifact.html
+
+# local tooling / editor config
+.claude/
+.DS_Store
+Thumbs.db
+
+# 制作用の内部資料（公開リポジトリには含めない）
+パオ_HP制作前リサーチ.html
+exec-*.png
